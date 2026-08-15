@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regional Voice Scam Shield</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="brand">🛡️ VOICE SCAM SHIELD</div>
+      <div class="tag">Byteforge — regional-language scam detection</div>
+    </header>
+
+    <div class="console">
+      <label>CALL TRANSCRIPT</label>
+      <textarea id="transcript" placeholder="Paste a transcript, or press Record and speak…"></textarea>
+
+      <div class="row">
+        <button id="recordBtn" type="button">🎙 Record</button>
+        <button id="scanBtn" type="button">Scan transcript</button>
+        <span id="recStatus" class="status"></span>
+      </div>
+
+      <div id="result" class="result"></div>
+    </div>
+
+    <div class="history">
+      <h2>Recent scans</h2>
+      {% if history %}
+        <table>
+          <tr><th>Transcript</th><th>Risk</th><th>Time</th></tr>
+          {% for h in history %}
+          <tr>
+            <td class="t-cell">{{ h["transcript"][:70] }}{% if h["transcript"]|length > 70 %}…{% endif %}</td>
+            <td><span class="pill pill-{{ h['risk_label']|lower|replace(' ', '-') }}">{{ h["risk_label"] }} ({{ h["risk_pct"] }}%)</span></td>
+            <td class="mono">{{ h["created_at"] }}</td>
+          </tr>
+          {% endfor %}
+        </table>
+      {% else %}
+        <p class="muted">No scans yet — run one above.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

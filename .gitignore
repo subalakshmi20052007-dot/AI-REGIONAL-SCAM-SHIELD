@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+venv/
+.venv/
+scam_shield.db
+.DS_Store
